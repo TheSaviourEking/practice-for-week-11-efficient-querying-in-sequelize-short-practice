@@ -122,7 +122,7 @@ app.get('/books', async (req, res) => {
 // STEP #2: Benchmark and Refactor Another Query
 app.patch('/authors/:authorId/books', async (req, res) => {
     const author = await Author.findOne({
-        include: { model: Book },
+        include: { model: Book, attributes: {exclude: 'AuthorId'} },
         where: {
             id: req.params.authorId
         }
@@ -140,15 +140,15 @@ app.patch('/authors/:authorId/books', async (req, res) => {
         await book.save();
     }
 
-    const books = await Book.findAll({
-        where: {
-            authorId: author.id
-        }
-    });
+    // const books = await Book.findAll({
+    //     where: {
+    //         authorId: author.id
+    //     }
+    // });
 
     res.json({
         message: `Successfully updated all authors.`,
-        books
+        books: author.Books
     });
 });
 
