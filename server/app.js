@@ -21,13 +21,13 @@ app.use(express.json());
 app.get('/test-benchmark-logging', async (req, res) => {   // > 100 ms execution time
     const books = await Book.findAll({
         include: [
-            { model: Author }, 
+            { model: Author },
             { model: Review },
             { model: Reviewer }
         ],
         // Uncomment the lines below to see the data structure more clearly
-        // limit: 100,
-        // offset: 2000
+        limit: 100,
+        offset: 2000
     });
     res.json(books);
 });
@@ -47,21 +47,21 @@ app.get('/books', async (req, res) => {
     res.json(books);
 });
 
-    // 1a. Analyze:
+// 1a. Analyze:
 
-        // Record Executed Query and Baseline Benchmark Below:
+// Record Executed Query and Baseline Benchmark Below:
 
-        // - What is happening in the code of the query itself?
+// - What is happening in the code of the query itself?
 
 
-        // - What exactly is happening as SQL executes this query? 
- 
+// - What exactly is happening as SQL executes this query? 
+
 
 
 
 // 1b. Identify Opportunities to Make Query More Efficient
 
-    // - What could make this query more efficient?
+// - What could make this query more efficient?
 
 
 // 1c. Refactor the Query in GET /books
@@ -70,9 +70,9 @@ app.get('/books', async (req, res) => {
 
 // 1d. Benchmark the Query after Refactoring
 
-    // Record Executed Query and Baseline Benchmark Below:
+// Record Executed Query and Baseline Benchmark Below:
 
-    // Is the refactored query more efficient than the original? Why or Why Not?
+// Is the refactored query more efficient than the original? Why or Why Not?
 
 
 
@@ -116,9 +116,9 @@ app.patch('/authors/:authorId/books', async (req, res) => {
 
 // BONUS Step: Benchmark and Add Index
 // Examples:
-    // GET /reviews?firstName=Daisy&lastName=Herzog
-    // GET /reviews?firstName=Daisy
-    // GET /reviews?lastName=Herzog
+// GET /reviews?firstName=Daisy&lastName=Herzog
+// GET /reviews?firstName=Daisy
+// GET /reviews?lastName=Herzog
 app.get('/reviews', async (req, res) => {
     const { firstName, lastName } = req.query;
 
@@ -129,7 +129,7 @@ app.get('/reviews', async (req, res) => {
 
     const reviews = await Review.findAll({
         include: {
-            model: Reviewer, 
+            model: Reviewer,
             where: whereClause,
             attributes: ['firstName', 'lastName']
         },
